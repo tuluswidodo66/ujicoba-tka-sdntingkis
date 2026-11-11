@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UJI COBA TES KEMAMPUAN AKADEMIK (TKA) UPT SD NEGERI TINGKIS 2027</title>
+    <!-- Tailwind CSS for utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Font Setup */
+        @font-face {
+            font-family: 'Arial Nova Cond';
+            src: local('Arial Nova Cond'), local('Arial Condensed'), local('Arial');
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .font-header {
+            font-family: 'Arial Nova Cond', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        /* Requirements Specific Font Sizes */
+        .text-stimulus, .text-question, .text-option {
+            font-family: Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+        }
+
+        /* Enforce justify alignment for stimulus texts as requested */
+        .text-stimulus {
+            text-align: justify;
+        }
+
+        .text-source {
+            font-family: Arial, sans-serif;
+            font-size: 8pt;
+            font-style: italic;
+            text-align: left;
+        }
+
+        .text-source a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        /* Custom Interactive Components */
+        /* Multiple Choice Circle Radio */
+        .option-circle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #6b7280;
+            font-size: 11pt;
+            font-weight: bold;
+            color: #374151;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .option-card {
+            border: 1.5px solid #e5e7eb;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            border-color: #9ca3af;
+            background-color: #f9fafb;
+        }
+
+        .option-card.selected-pg {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .option-card.selected-pg .option-circle-btn {
+            border-color: #2563eb;
+            background-color: #2563eb;
+            color: white;
+        }
+
+        /* Checkbox Box (MCMA) */
+        .option-checkbox-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 2px solid #6b7280;
+            font-size: 14px;
+            font-weight: bold;
+            color: transparent;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .option-card.selected-mcma {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .option-card.selected-mcma .option-checkbox-box {
+            border-color: #2563eb;
+            background-color: #2563eb;
+            color: white;
+        }
+
+        /* True/False Category Table Styling */
+        .category-table th, .category-table td {
+            border: 1px solid #d1d5db;
+            padding: 10px;
+        }
+
+        .category-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 2px solid #9ca3af;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+
+        .category-btn.active-true {
+            border-color: #16a34a;
+            background-color: #16a34a;
+            color: white;
+        }
+
+        .category-btn.active-false {
+            border-color: #dc2626;
+            background-color: #dc2626;
+            color: white;
+        }
+
+        /* Question Navigation Badge Colors */
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        /* Status colors */
+        .status-unanswered { background-color: #e5e7eb; color: #374151; border: 1px solid #d1d5db; }
+        .status-answered { background-color: #16a34a; color: white; border: 1px solid #15803d; }
+        .status-doubt { background-color: #eab308; color: white; border: 1px solid #ca8a04; }
+        .status-active { ring: 3px solid #2563eb; font-weight: 900; transform: scale(1.08); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative bg-slate-100">
+
+    <!-- ==================== 1. HALAMAN LOGIN / IDENTITAS ==================== -->
+    <div id="page-login" class="min-h-screen flex flex-col justify-center items-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-10 w-full max-w-xl text-center relative overflow-hidden">
+            <!-- Header Judul -->
+            <div class="mb-8 border-b pb-6 border-gray-200">
+                <h1 class="font-header text-2xl md:text-3xl text-blue-900 uppercase tracking-wide leading-tight">
+                    UJI COBA TES KEMAMPUAN AKADEMIK (TKA)
+                </h1>
+                <h2 class="font-header text-xl md:text-2xl text-blue-800 uppercase tracking-wide mt-1">
+                    UPT SD NEGERI TINGKIS
+                </h2>
+                <h3 class="font-header text-lg md:text-xl text-blue-700 uppercase tracking-wide mt-1">
+                    TAHUN 2027
+                </h3>
+            </div>
+
+            <!-- Form Isian -->
+            <form id="form-login" onsubmit="handleLogin(event)" class="space-y-5 text-left">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap Peserta</label>
+                    <input type="text" id="input-nama" required placeholder="Masukkan nama lengkap Anda"
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800 uppercase">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">NISN</label>
+                    <input type="text" id="input-nisn" required pattern="[0-9]+" placeholder="Masukkan 10 digit NISN"
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Token Ujian</label>
+                    <input type="text" id="input-token" required placeholder="Masukkan Token (contoh: VL3URA)"
+                        class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800 uppercase tracking-wider font-mono">
+                </div>
+
+                <!-- Error Warning Banner -->
+                <div id="error-token" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded text-sm">
+                    Maaf, token yang Anda masukkan salah. Silakan ulangi Kembali.
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition duration-200 text-lg mt-4">
+                    MASUK & VERIFIKASI
+                </button>
+            </form>
+        </div>
+
+        <!-- Watermark Pojok Kanan Bawah -->
+        <div class="fixed bottom-3 right-4 text-xs font-semibold text-gray-500 bg-white/80 px-3 py-1.5 rounded-full shadow border border-gray-200">
+            Dibuat oleh: Tulus Widodo
+        </div>
+    </div>
+
+
+    <!-- ==================== 2. MODAL POP-UP PETUNJUK ==================== -->
+    <div id="modal-instructions" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col transform transition-all">
+            <div class="bg-blue-600 text-white p-5 text-center">
+                <h3 class="text-xl font-bold">KONFIRMASI & PETUNJUK UJIAN</h3>
+            </div>
+            
+            <div class="p-6 space-y-4 text-gray-700">
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-1 text-sm">
+                    <p><span class="font-semibold text-blue-900">Nama Peserta:</span> <span id="confirm-nama" class="font-bold"></span></p>
+                    <p><span class="font-semibold text-blue-900">NISN:</span> <span id="confirm-nisn" class="font-bold"></span></p>
+                    <p><span class="font-semibold text-blue-900">Mata Pelajaran:</span> Bahasa Indonesia (30 Soal)</p>
+                </div>
+
+                <div class="space-y-2 text-sm leading-relaxed">
+                    <p class="font-bold text-gray-900">Petunjuk Pengerjaan Soal:</p>
+                    <ul class="list-disc pl-5 space-y-2 text-gray-600">
+                        <li>a) Soal terdiri dari <strong>30 butir soal</strong> dengan waktu mengerjakan maksimal <strong>75 menit</strong>.</li>
+                        <li>b) Periksa Kembali jawaban Anda. Pastikan Anda menjawab dengan benar.</li>
+                    </ul>
+                    <p class="font-bold text-blue-600 text-center text-base pt-2">Selamat mengerjakan!</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-100 p-4 px-6 flex justify-end border-t border-gray-200">
+                <button onclick="startExam()" 
+                    class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition duration-200 flex items-center gap-2">
+                    <span>Saya Mengerti, Saya Siap Mengerjakan</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==================== 3. HALAMAN SOAL / UJIAN ==================== -->
+    <div id="page-exam" class="hidden min-h-screen flex flex-col bg-slate-50">
+        <!-- Top Navbar Header -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div>
+                    <h1 class="text-sm md:text-base font-bold text-blue-900">UJI COBA TKA 2027 - SD NEGERI TINGKIS</h1>
+                    <p class="text-xs text-gray-500" id="header-user-info">Peserta: -</p>
+                </div>
+                <!-- Countdown Timer -->
+                <div class="bg-amber-100 border border-amber-300 text-amber-900 px-4 py-2 rounded-lg font-mono font-bold text-sm md:text-base flex items-center gap-2 shadow-inner">
+                    <svg class="w-5 h-5 text-amber-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span id="timer-display">75:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Layout (Flex Grid) -->
+        <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+            
+            <!-- Question Content Area (Left 3 Columns) -->
+            <div class="lg:col-span-3 flex flex-col gap-4">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 md:p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <!-- Header Nomor Soal -->
+                        <div class="flex justify-between items-center border-b pb-3 mb-4">
+                            <h2 class="text-lg font-bold text-blue-900" id="question-title-number">Soal Nomor 1</h2>
+                            <span id="question-type-badge" class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-1 rounded-full">Pilihan Ganda</span>
+                        </div>
+
+                        <!-- Stimulus Container -->
+                        <div id="stimulus-container" class="mb-6 bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200">
+                            <div id="stimulus-text" class="text-stimulus text-gray-800 mb-2 space-y-2"></div>
+                            <div id="stimulus-source" class="text-source text-gray-500 mt-2 border-t pt-2 border-slate-200"></div>
+                        </div>
+
+                        <!-- Pokok Soal & Petunjuk -->
+                        <div class="mb-5">
+                            <p id="question-instruction" class="text-stimulus font-semibold text-blue-800 mb-1 hidden"></p>
+                            <p id="question-stem" class="text-question font-medium text-gray-900"></p>
+                        </div>
+
+                        <!-- Answer Options Container -->
+                        <div id="options-container" class="space-y-3 mt-4">
+                            <!-- Injected Dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Action Control Buttons -->
+                    <div class="mt-8 pt-4 border-t border-gray-200 flex flex-wrap justify-between items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleDoubt()" id="btn-doubt" 
+                                class="bg-amber-100 hover:bg-amber-200 text-amber-800 border border-amber-300 font-semibold px-4 py-2.5 rounded-xl transition text-sm flex items-center gap-2">
+                                <input type="checkbox" id="chk-doubt-state" class="pointer-events-none rounded text-amber-600">
+                                <span>Ragu-ragu</span>
+                            </button>
+                            <button onclick="nextQuestion()" 
+                                class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-4 py-2.5 rounded-xl transition text-sm">
+                                Lewati
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="prevQuestion()" id="btn-prev" 
+                                class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-4 py-2.5 rounded-xl transition text-sm disabled:opacity-40">
+                                Sebelum
+                            </button>
+                            <button onclick="nextQuestion()" id="btn-next" 
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2.5 rounded-xl transition text-sm shadow">
+                                Berikutnya
+                            </button>
+                            <button onclick="confirmFinishExam()" id="btn-finish" 
+                                class="hidden bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-2.5 rounded-xl transition text-sm shadow-lg">
+                                Selesai
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar - Question Navigation (Right 1 Column) -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 sticky top-20">
+                    <h3 class="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wider">Navigasi Nomor Soal</h3>
+                    
+                    <!-- Color Legend -->
+                    <div class="grid grid-cols-2 gap-2 text-xs mb-4 pb-3 border-b border-gray-100">
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-gray-200 border"></span> Belum</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-green-600"></span> Dijawab</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500"></span> Ragu</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded ring-2 ring-blue-600 bg-white"></span> Aktif</div>
+                    </div>
+
+                    <!-- 30 Buttons Grid -->
+                    <div id="nav-grid" class="grid grid-cols-5 gap-2 max-h-[350px] overflow-y-auto p-1">
+                        <!-- Injected via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ==================== 4. HALAMAN HASIL / NILAI ==================== -->
+    <div id="page-result" class="hidden min-h-screen flex flex-col justify-center items-center p-4 bg-slate-100">
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-10 w-full max-w-2xl text-center space-y-6">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+
+            <div class="space-y-2">
+                <h2 class="text-2xl md:text-3xl font-bold text-blue-950">Selamat!</h2>
+                <p class="text-gray-700 text-base md:text-lg max-w-md mx-auto leading-relaxed">
+                    Anda telah menyelesaikan Uji Coba Tes Kemampuan Akademik (TKA). Nilai yang anda dapatkan adalah
+                </p>
+            </div>
+
+            <!-- Big Score Display -->
+            <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 max-w-xs mx-auto shadow-inner">
+                <span id="final-score" class="text-5xl md:text-6xl font-black text-blue-700 tracking-tight">0.00</span>
+                <span class="block text-xs font-semibold text-blue-500 uppercase mt-1">Skala Nilai (0 - 100)</span>
+            </div>
+
+            <!-- Details Summary Table -->
+            <div class="bg-slate-50 rounded-xl p-4 text-left border border-slate-200 text-sm space-y-2 max-w-md mx-auto">
+                <div class="flex justify-between"><span class="text-gray-600">Nama Peserta:</span> <span id="res-nama" class="font-bold"></span></div>
+                <div class="flex justify-between"><span class="text-gray-600">NISN:</span> <span id="res-nisn" class="font-bold"></span></div>
+                <div class="flex justify-between border-t pt-2"><span class="text-gray-600">Jumlah Jawaban Benar:</span> <span id="res-correct" class="font-bold text-green-600">0 / 30</span></div>
+                <div class="flex justify-between"><span class="text-gray-600">Waktu Pengerjaan:</span> <span id="res-time" class="font-bold text-gray-800"></span></div>
+            </div>
+
+            <div>
+                <button onclick="location.reload()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
+                    Kembali ke Halaman Utama
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-4 text-xs text-gray-500">
+            Dibuat oleh: Tulus Widodo
+        </div>
+    </div>
+
+
+    <!-- ==================== JAVASCRIPT ENGINE & SOAL DATABASE ==================== -->
+    <script>
+        // TOKEN CONFIGURATION
+        const CORRECT_TOKEN = "VL3URA";
+        const TOTAL_QUESTIONS = 30;
+        const EXAM_DURATION_MINUTES = 75;
+
+        // STATE VARIABLES
+        let currentUser = { nama: '', nisn: '' };
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // { qIndex: answerData }
+        let doubtStatus = {}; // { qIndex: boolean }
+        let timerInterval = null;
+        let timeRemainingSeconds = EXAM_DURATION_MINUTES * 60;
+        let startTime = null;
+
+        // DATABASE 30 SOAL BAHASA INDONESIA
+        const questionsData = [
+            // Soal 1-3
+            {
+                number: 1,
+                type: 'PG',
+                stimulus: `<strong>Pesona Goa Akbar Tuban</strong><br>Goa Akbar sangatlah unik. Lokasinya tepat di bawah pasar. Pusat kota terasa sangat ramai. Pintu masuk goa nampak sederhana. Pengunjung menuruni anak tangga kayu. Udara dalam goa terasa sejuk. Suasana hening mulai terasa menyelimuti. Stalaktit menggantung di langit goa. Stalagmit tumbuh dari dasar tanah. Tetesan air mengandung unsur kapur. Formasi batuan kapur nampak indah. Proses alam berlangsung ribuan tahun. Bebatuan nampak berkilau kena cahaya. Arsitektur alam ini sangat mengagumkan.<br>Pemerintah menata kawasan dengan apik. Lampu warna-warni menerangi batuan. Lorong goa nampak lebih terang. Jalur pejalan kaki menggunakan paving. Akses wisata menjadi sangat mudah. Pengunjung lanjut usia merasa nyaman. Fasilitas pendukung tersedia cukup lengkap. Terdapat paseban bersejarah para wali. Jejak penyebar agama tersimpan rapi. Nilai religi terasa sangat kental. Geologi dan sejarah menyatu padu. Kebersihan area selalu terjaga baik. Tempat sampah tersedia di sudut. Petugas menjaga keasrian lingkungan goa. Wisatawan sangat meminati destinasi ini. Pengelolaan profesional mendukung pariwisata daerah. Keindahan ini harus tetap lestari. Seluruh masyarakat wajib menjaga alam. Mari berkunjung ke kota Tuban. Nikmati keajaiban bawah tanah ini.`,
+                source: `Sumber: <a href="https://www.detik.com/jatim/wisata/d-8256123/goa-akbar-tuban-situs-bersejarah-dengan-jejak-wali-songo" target="_blank">https://www.detik.com/jatim/wisata/d-8256123/goa-akbar-tuban-situs-bersejarah-dengan-jejak-wali-songo</a> (dengan penyesuaian)`,
+                stem: `Kata berikut yang merupakan kosakata khusus dalam bidang geologi yang memiliki makna serupa dengan proses pembentukan batuan di dalam goa adalah ....`,
+                options: [
+                    `stalagmit`,
+                    `kapur`,
+                    `paseban`,
+                    `paving`
+                ],
+                key: 'A'
+            },
+            {
+                number: 2,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks "Pesona Goa Akbar Tuban")`,
+                stimulusRef: 1,
+                stem: `Berdasarkan teks, fasilitas yang dibangun pemerintah untuk memudahkan akses bagi pengunjung dari berbagai usia adalah ....`,
+                options: [
+                    `tangga kayu yang sangat tinggi`,
+                    `lampu warna-warni di setiap sudut`,
+                    `jalur pejalan kaki dengan paving`,
+                    `tempat sampah tersedia di sudut`
+                ],
+                key: 'C'
+            },
+            {
+                number: 3,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks "Pesona Goa Akbar Tuban")`,
+                stimulusRef: 1,
+                stem: `Ide pokok pada paragraf pertama teks deskripsi tersebut adalah ....`,
+                options: [
+                    `ramainya aktivitas masyarakat di pasar.`,
+                    `keunikan dan keindahan alam Goa Akbar.`,
+                    `proses pembangunan anak tangga kayu.`,
+                    `sejuknya udara di pusat kota Tuban.`
+                ],
+                key: 'B'
+            },
+
+            // Soal 4-6
+            {
+                number: 4,
+                type: 'MCMA',
+                instruction: `(Pilih semua jawaban benar! Jawaban benar lebih dari satu)`,
+                stimulus: `<strong>Resep Klepon Pandan Tradisional</strong><br><strong>Bahan Utama:</strong><br>Siapkan tepung ketan putih berkualitas. Gunakan sedikit tepung beras putih. Siapkan air perasan pandan asli. Gunakan irisan halus gula merah. Siapkan parutan kelapa kukus segar. Tambahkan sedikit garam halus saja. Sediakan air bersih untuk merebus.<br><br><strong>Langkah-Langkah:</strong><br><em>Membuat Adonan Hijau</em><br>Campur tepung ketan dan beras. Tuangkan air perasan pandan alami. Aduk adonan sampai benar-benar kalis. Pastikan tekstur tidak lengket lagi. Adonan harus sangat mudah dibentuk. Jangan biarkan adonan menjadi lembek. Kualitas adonan menentukan kekenyalan kue.<br><br><em>Proses Mengisi Gula</em><br>Ambil sedikit adonan hijau tadi. Pipihkan adonan dengan jempol tangan. Masukkan irisan gula merah secukupnya. Tutup lubang adonan sangat rapat. Bulatkan kembali bola secara perlahan. Pastikan kulit bola tidak retak. Gula merah tidak boleh bocor. Kebocoran merusak tampilan bola klepon.<br><br><em>Merebus Bola Klepon</em><br>Didihkan air dalam panci besar. Masukkan bola-bola ke air mendidih. Tunggu bola mengapung ke permukaan. Segera angkat bola klepon tersebut. Tiriskan air dengan sangat cepat. Tekstur klepon akan tetap kenyal.<br><br><em>Penyajian Kelapa Parut</em><br>Siapkan parutan kelapa kukus segar. Gulingkan klepon pada parutan kelapa. Pastikan kelapa menempel secara rata. Sajikan klepon selagi masih hangat. Nikmati sensasi lumer gula merah. Rasanya sungguh sangat luar biasa.`,
+                source: `Sumber: Diadaptasi dari Resep Warisan Nusantara (2024)`,
+                stem: `Apa saja hal yang dilakukan dalam tahap pengisian dan penyajian klepon menurut teks?`,
+                options: [
+                    `Memipihkan adonan hijau menggunakan jempol.`,
+                    `Memasukkan irisan gula merah ke dalam adonan.`,
+                    `Mencampur kelapa parut dengan air perasan pandan.`
+                ],
+                key: ['A', 'B']
+            },
+            {
+                number: 5,
+                type: 'CATEGORY',
+                stimulus: `(Mengacu pada teks "Resep Klepon Pandan Tradisional")`,
+                stimulusRef: 4,
+                stem: `Berdasarkan teks, bagaimanakah perubahan yang terjadi pada bahan-bahan saat proses pembuatan klepon berlangsung? Tentukan benar atau salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Adonan yang awalnya terpisah antara tepung dan air pandan akan berubah menjadi massa yang kalis serta tidak lengket setelah diaduk.`,
+                    `Gula merah yang semula berbentuk irisan padat di dalam adonan akan berubah menjadi lumer (mencair) akibat proses perebusan.`,
+                    `Kelapa parut yang awalnya tawar akan berubah menjadi sedikit gurih setelah dikukus dan diberi tambahan garam halus.`
+                ],
+                key: ['Benar', 'Benar', 'Benar']
+            },
+            {
+                number: 6,
+                type: 'MCMA',
+                instruction: `(Pilih semua jawaban benar! Jawaban benar lebih dari satu)`,
+                stimulus: `(Mengacu pada teks "Resep Klepon Pandan Tradisional")`,
+                stimulusRef: 4,
+                stem: `Berdasarkan pengalaman atau pengetahuanmu tentang tradisi kuliner di masyarakat, manakah peristiwa dalam teks pembuatan klepon tersebut yang sesuai dengan kehidupan sehari-hari?`,
+                options: [
+                    `Proses pembuatan kue tradisional seperti klepon sering kali menjadi momen kebersamaan dan kerja sama antaranggota keluarga di rumah.`,
+                    `Penggunaan parutan kelapa dan gula merah merupakan ciri khas bahan jajanan tradisional Indonesia yang mudah ditemukan di pasar lokal.`,
+                    `Semua orang di lingkungan masyarakat modern saat ini wajib membuat klepon sendiri sebagai syarat utama dalam mengadakan acara syukuran.`
+                ],
+                key: ['A', 'B']
+            },
+
+            // Soal 7-9
+            {
+                number: 7,
+                type: 'PG',
+                stimulus: `<strong>Rahasia Tidur Berkualitas bagi Tubuh</strong><br>Tidur adalah proses biologis penting. Otak melakukan konsolidasi memori. Sel-sel tubuh melakukan regenerasi. Jaringan rusak akan segera diperbaiki. Proses ini terjadi saat terlelap. Tubuh bekerja secara otomatis. Tidur bukan sekadar istirahat biasa. Kesehatan menyeluruh sangat bergantung padanya. Keseimbangan tubuh harus selalu terjaga. Kita butuh waktu istirahat cukup.<br><br>Tidur memengaruhi sistem imunitas manusia. Tubuh memproduksi protein khusus. Protein ini membantu melawan infeksi. Begadang dapat mengganggu metabolisme tubuh. Hal ini memicu risiko obesitas. Fungsi kognitif manusia akan menurun. Daya konsentrasi menjadi sangat rendah. Produktivitas harian pasti akan terganggu. Suasana hati menjadi tidak stabil. Masalah kesehatan muncul tanpa disadari.<br><br>Waktu tidur adalah investasi terbaik. Jadwal tidur harus selalu teratur. Ini bentuk tanggung jawab diri. Ekosistem tubuh tetap terjaga prima. Teks menggunakan kosakata umum tidur. Teks menggunakan kosakata khusus metabolisme. Ikhtisar teks adalah manfaat tidur. Tidur menjaga fungsi organ tubuh. Ungkapan investasi terbaik berarti manfaat. Menjaga ekosistem berarti menjaga kestabilan. Kalimat teks ini bersifat tunggal. Panjang kalimat hanya tiga-tujuh kata. Jumlah kata mencapai batas minimal.`,
+                source: `Sumber: dokumen pribadi`,
+                stem: `Berdasarkan teks tersebut, kelompok kosakata khusus dalam bidang kesehatan adalah ....`,
+                options: [
+                    `tidur, sekolah, dan rumah`,
+                    `tubuh, waktu, dan pagi hari`,
+                    `regenerasi, kognitif, dan imunitas`,
+                    `belajar, bekerja, dan bermain`
+                ],
+                key: 'C'
+            },
+            {
+                number: 8,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks "Rahasia Tidur Berkualitas bagi Tubuh")`,
+                stimulusRef: 7,
+                stem: `Berdasarkan teks tersebut, hubungan antara tidur dan kesehatan adalah ...`,
+                options: [
+                    `Tidur hanya diperlukan agar kita tidak merasa mengantuk saat sekolah.`,
+                    `Tidur berkualitas membantu perbaikan jaringan sel dan meningkatkan imunitas tubuh.`,
+                    `Begadang adalah cara terbaik untuk meningkatkan konsolidasi memori di otak.`,
+                    `Suasana hati yang buruk adalah satu-satunya dampak dari kurang tidur.`
+                ],
+                key: 'B'
+            },
+            {
+                number: 9,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks "Rahasia Tidur Berkualitas bagi Tubuh")`,
+                stimulusRef: 7,
+                stem: `Makna investasi terbaik pada paragraf ketiga teks tersebut adalah ...`,
+                options: [
+                    `Menabung uang untuk biaya rumah sakit di masa depan.`,
+                    `Sesuatu yang dilakukan sekarang demi manfaat di masa depan.`,
+                    `Membeli peralatan tidur yang sangat mahal harganya.`,
+                    `Memberikan modal usaha kepada orang lain agar berkembang.`
+                ],
+                key: 'B'
+            },
+
+            // Soal 10-12
+            {
+                number: 10,
+                type: 'CATEGORY',
+                stimulus: `<strong>Pentingnya Sarapan Sehat Bagi Siswa</strong><br>Sarapan pagi sangatlah krusial. Tubuh butuh energi awal. Otak memerlukan nutrisi harian. Gizi seimbang sangat penting. Konsentrasi belajar akan meningkat. Prestasi akademik pun terjaga. Guru merasa sangat tenang. Siswa siap menerima pelajaran. Namun, banyak anak melewatkan. Hal ini sungguh merugikan. Masyarakat harus segera sadar. Kesehatan anak adalah utama.<br><br>Karbohidrat membangun tenaga fisik. Protein mendukung fungsi otak. Lemak sehat membantu memori. Metabolisme bekerja lebih optimal. Siswa fokus belajar sekolah. Daya ingat menjadi tajam. Tubuh terhindar penyakit kronis. Berat badan tetap ideal. Keinginan jajan sembarang berkurang. Camilan tidak sehat dihindari. Suasana hati lebih positif. Kesehatan mental anak terjaga. Anak ceria sepanjang hari. Guru mengapresiasi siswa bugar. Fenomena anak lemas hilang. Belajar menjadi sangat menyenangkan.<br><br>Keluarga harus membiasakan sarapan. Orang tua menyiapkan menu. Pilihan makanan harus bergizi. Siswa disiplin bangun pagi. Karakter baik mulai terbentuk. Prestasi sekolah meningkat pesat. Disiplin sarapan adalah kunci. Budaya sarapan berdampak besar. Mari dukung gerakan sehat. Kita wujudkan generasi kuat. Masa depan bangsa cerah.`,
+                source: `Sumber: <a href="https://keslan.kemkes.go.id/view_artikel/3599/pentingnya-sarapan-pagi-bagi-anak-anak" target="_blank">https://keslan.kemkes.go.id/view_artikel/3599/pentingnya-sarapan-pagi-bagi-anak-anak</a>, dengan penyesuaian.`,
+                stem: `Berdasarkan teks tersebut, apa dampak sarapan terhadap siswa? Tentukan benar atau salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Asupan karbohidrat dan protein dari menu sarapan berfungsi untuk membangun tenaga fisik bagi siswa.`,
+                    `Sarapan pagi secara rutin menjadikan kemampuan memori otak lebih tajam.`,
+                    `Sarapan pagi meningkatkan keinginan siswa untuk jajan sembarangan.`
+                ],
+                key: ['Benar', 'Benar', 'Salah']
+            },
+            {
+                number: 11,
+                type: 'MCMA',
+                instruction: `(Pilih semua jawaban benar! Jawaban benar lebih dari satu)`,
+                stimulus: `(Mengacu pada teks "Pentingnya Sarapan Sehat Bagi Siswa")`,
+                stimulusRef: 10,
+                stem: `Berdasarkan teks tersebut, manakah simpulan yang paling tepat mengenai nilai dan pesan yang ingin disampaikan penulis?`,
+                options: [
+                    `Kedisiplinan bangun lebih awal merupakan kunci utama agar siswa memiliki waktu untuk sarapan dan membentuk karakter yang baik.`,
+                    `Tanggung jawab pemenuhan gizi siswa sepenuhnya berada di tangan guru karena mereka adalah pihak yang paling khawatir di sekolah.`,
+                    `Sarapan sehat merupakan investasi jangka panjang bagi siswa untuk meraih prestasi akademik sekaligus menjaga kesehatan fisik dan mental.`
+                ],
+                key: ['A', 'C']
+            },
+            {
+                number: 12,
+                type: 'CATEGORY',
+                stimulus: `(Mengacu pada teks "Pentingnya Sarapan Sehat Bagi Siswa")`,
+                stimulusRef: 10,
+                stem: `Apakah hubungan sebab-akibat berikut sudah sesuai dengan isi teks tersebut? Tentukan benar atau salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Adanya hubungan yang logis antara asupan protein dan karbohidrat dengan terbentuknya tenaga fisik serta dukungan terhadap fungsi kerja otak siswa.`,
+                    `Teks menunjukkan ketidaksesuaian informasi karena menyebutkan bahwa disiplin sarapan pagi tidak memiliki pengaruh sama sekali terhadap pembentukan karakter anak.`,
+                    `Terdapat keselarasan informasi antara peran orang tua dalam menyiapkan menu sehat dengan tujuan akhir untuk mewujudkan generasi masa depan yang kuat.`
+                ],
+                key: ['Benar', 'Salah', 'Benar']
+            },
+
+            // Soal 13-15
+            {
+                number: 13,
+                type: 'PG',
+                stimulus: `<strong>Transformasi Positif Pantai Boom Tuban</strong><br>Pantai Boom kini sangat indah. Dahulu pantai ini tampak kusam. Sampah plastik sering sekali terlihat. Sekarang pantai menjadi sangat bersih. Pemerintah daerah rajin merawatnya. Pengunjung merasa sangat nyaman sekali. Petugas kebersihan bekerja setiap pagi. Kesadaran warga juga mulai meningkat.<br><br>Jalur pejalan kaki sangat rapi. Paving blok kini tertata indah. Dulu tanah sangat gersang sekali. Kini banyak pohon rindang tumbuh. Udara pantai terasa sangat sejuk. Gazebo kayu tersedia cukup banyak. Wisatawan bisa istirahat dengan tenang. Keluarga duduk santai sambil berbincang.<br><br>Ada jembatan kayu yang panjang. Jembatan menjorok jauh ke laut. Dulu jembatan ini sangat rapuh. Sekarang jembatan sudah sangat kokoh. Fondasi beton terpasang sangat kuat. Keamanan pengunjung menjadi sangat terjamin. Lampu hias mulai banyak terpasang. Suasana malam makin terlihat cantik. Pemandangan laut tampak sangat menawan.<br><br>Area parkir kini sangat luas. Kendaraan tertata dengan sangat tertib. Fasilitas toilet umum cukup bersih. Air bersih selalu tersedia lancar. Warung makan juga tertata rapi. Harga makanan tetap sangat terjangkau. Objek wisata Tuban kini berubah. Wajah pantai semakin terlihat modern. Daya tarik wisata terus meningkat. Ekonomi warga sekitar ikut tumbuh. Kelestarian alam tetap terjaga baik. Pantai Boom adalah kebanggaan warga. Mari kita jaga bersama-sama. Kebersihan adalah tanggung jawab kita. Wisata Tuban harus makin maju. Kita harus bangga memilikinya selalu.`,
+                source: `Sumber: <a href="https://tubankab.go.id/entry/pantai-boom-tuban-1" target="_blank">https://tubankab.go.id/entry/pantai-boom-tuban-1</a>`,
+                stem: `Berdasarkan teks tersebut, yang bertanggung jawab melakukan perawatan rutin sehingga Pantai Boom menjadi sangat bersih adalah ....`,
+                options: [
+                    `wisatawan yang datang berkunjung`,
+                    `pemerintah daerah setempat`,
+                    `para pedagang warung makan`,
+                    `warga sekitar kelurahan`
+                ],
+                key: 'B'
+            },
+            {
+                number: 14,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks "Transformasi Positif Pantai Boom Tuban")`,
+                stimulusRef: 13,
+                stem: `Perubahan yang terjadi pada kondisi fisik jembatan di Pantai Boom menurut hasil pengamatan tersebut adalah ....`,
+                options: [
+                    `jembatan yang dulunya beton kini diganti menjadi kayu`,
+                    `jembatan yang dulunya panjang kini menjadi lebih pendek`,
+                    `jembatan yang dulunya rapuh kini menjadi sangat kokoh`,
+                    `jembatan yang dulunya sepi kini terpasang banyak gazebo`
+                ],
+                key: 'C'
+            },
+            {
+                number: 15,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks "Transformasi Positif Pantai Boom Tuban")`,
+                stimulusRef: 13,
+                stem: `Pernyataan berikut yang tidak sesuai dengan informasi yang terdapat di dalam teks adalah ...`,
+                options: [
+                    `Pemasangan lampu hias membuat suasana malam di pantai semakin cantik.`,
+                    `Kondisi tanah yang gersang menyebabkan udara di pantai terasa sangat panas.`,
+                    `Kebersihan fasilitas toilet didukung oleh ketersediaan air yang lancar.`,
+                    `Ekonomi warga ikut tumbuh seiring dengan meningkatnya daya tarik wisata.`
+                ],
+                key: 'B'
+            },
+
+            // Soal 16-18
+            {
+                number: 16,
+                type: 'CATEGORY',
+                stimulus: `<strong>Pidato Perpisahan Sekolah</strong><br>Selamat pagi Bapak Ibu Guru. Selamat pagi teman-teman semua. Mari kita panjatkan puji syukur. Tuhan memberikan kita kesehatan hari ini. Hari ini adalah hari kelulusan. Kami semua akan segera lulus. Kami pergi meninggalkan sekolah tercinta. Kabar ini sungguh sudah sangat jelas. Enam tahun telah berlalu cepat. Bapak Ibu Guru sabar membimbing. Terima kasih atas semua jasa kalian. Kalian sungguh pahlawan bagi kami. Kami sangat menyayangi kalian semua.<br><br>Kami memiliki banyak kenangan indah. Ada tawa dan juga air mata. Semua itu menjadi bekal hidup kami. Ilmu itu modal masa depan kami. Kami akan menjaga ilmu tersebut. Belajarlah dengan penuh rasa semangat. Mari kita kejar cita-cita besar. Itulah pesan penting bagi kita. Jangan pernah lupakan kebaikan guru. Kita harus selalu bersikap jujur. Jaga selalu sopan santun kita. Itulah nilai yang kita bawa.<br><br>Hari ini momen yang sangat bersejarah. Kita semua menjadi saksi utama. Perpisahan ini terasa sangat mengharukan. Namun perjalanan baru sudah menunggu. Persahabatan kita jangan sampai putus. Kita akan terus berjuang bersama. Kita pasti sukses di masa depan. Tuhan selalu memberkati langkah kita. Mohon maaf atas segala khilaf. Terima kasih atas semua.`,
+                source: `Sumber: dokumen pribadi`,
+                stem: `Apakah pernyataan-pernyataan berikut sudah sesuai dengan isi teks pidato tersebut? Tentukan benar atau salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Penulis menyebutkan bahwa waktu enam tahun di sekolah telah berlalu dengan sangat cepat.`,
+                    `Teks menunjukkan bahwa kejujuran dan sopan santun adalah nilai-nilai yang harus selalu dijaga oleh para lulusan.`,
+                    `Terdapat pesan dalam teks yang meminta para siswa untuk memutuskan hubungan persahabatan setelah mereka lulus.`
+                ],
+                key: ['Benar', 'Benar', 'Salah']
+            },
+            {
+                number: 17,
+                type: 'MCMA',
+                instruction: `(Pilih semua jawaban benar! Jawaban benar lebih dari satu)`,
+                stimulus: `(Mengacu pada teks "Pidato Perpisahan Sekolah")`,
+                stimulusRef: 16,
+                stem: `Di dalam teks tersebut terdapat beberapa ungkapan yang digunakan penulis untuk menyampaikan perasaannya. Manakah pernyataan berikut yang menjelaskan makna ungkapan sesuai dengan konteks teks tersebut?`,
+                options: [
+                    `Ungkapan "pahlawan" bagi guru bermakna sosok yang berjasa besar karena telah membimbing siswa dengan penuh kesabaran.`,
+                    `Ungkapan "modal masa depan" bermakna uang saku atau tabungan yang dikumpulkan siswa selama enam tahun bersekolah.`,
+                    `Ungkapan "bekal hidup" bermakna ilmu dan kumpulan kenangan indah yang akan menjadi pegangan siswa dalam menjalani kehidupan selanjutnya.`
+                ],
+                key: ['A', 'C']
+            },
+            {
+                number: 18,
+                type: 'CATEGORY',
+                stimulus: `(Mengacu pada teks "Pidato Perpisahan Sekolah")`,
+                stimulusRef: 16,
+                stem: `Berdasarkan teks pidato kelulusan tersebut, apakah pernyataan-pernyataan mengenai amanat atau pesan yang ingin disampaikan penulis berikut ini sudah sesuai? Tentukan benar atau salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Penulis berpesan agar para lulusan menjadikan ilmu dan kenangan indah sebagai modal semangat untuk mengejar cita-cita besar di masa depan.`,
+                    `Terdapat amanat agar para siswa segera melupakan jasa guru dan fokus sepenuhnya pada perjalanan baru yang sudah menunggu di depan mata.`,
+                    `Penulis menekankan pentingnya menjaga nilai-nilai karakter, yaitu kejujuran dan sopan santun, meskipun sudah tidak berada di lingkungan sekolah lagi.`
+                ],
+                key: ['Benar', 'Salah', 'Benar']
+            },
+
+            // Soal 19-21
+            {
+                number: 19,
+                type: 'PG',
+                stimulus: `Yogyakarta, 10 Februari 2026<br><br>Halo Rina, apa kabar? Semoga kamu selalu sehat ya. Aku sangat merindukanmu, Rin. Sekarang aku ikut kursus baru. Namanya kursus fotografi digital. Lokasinya dekat dengan rumahku. Aku belajar teknik pencahayaan. Aku juga mengatur komposisi gambar. Saat ini aku memakai DSLR. Aku belajar tentang aperture. Lalu belajar shutter speed juga. Instruktur kursusku sangat sabar. Beliau menjelaskan materi dengan rinci. Aku semakin mahir memotret objek.<br><br>Selain itu aku ikut KIR. KIR itu ekstrakurikuler sekolah. Kami sedang sibuk meneliti air. Kami memakai metode filtrasi. Kami juga melakukan uji pH. Hal ini melatih kepedulian lingkungan. Kami bekerja dalam kelompok kecil. Aku sangat menikmati kegiatan ini. Teman-teman di KIR sangat baik. Kami sering diskusi bersama-sama.<br><br>Ayo kita segera bertemu, Rin. Kita bisa berburu foto bersama. Kita pergi ke Pantai Parangtritis. Atau kita main ke Malioboro. Aku ingin memotret senja sana. Tolong balas suratku segera, ya. Ceritakan juga pengalaman sekolah barumu. Pasti banyak cerita seru darimu. Aku tunggu balasan darimu. Sampai jumpa lagi, sahabat baikku.<br><br>Salam hangat,<br>Sri`,
+                source: `Sumber: Dokumentasi pribadi`,
+                stem: `Berdasarkan teks tersebut, alasan utama Sri merasa kesulitan saat awal mengikuti kursus fotografi adalah karena ....`,
+                options: [
+                    `instruktur kursus kurang sabar dalam mengajar`,
+                    `lokasi sanggar seni sangat jauh dari rumahnya`,
+                    `sulit memahami istilah-istilah teknis fotografi`,
+                    `kamera DSLR yang digunakan mengalami kerusakan.`
+                ],
+                key: 'C'
+            },
+            {
+                number: 20,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks Surat Pribadi dari Sri ke Rina)`,
+                stimulusRef: 19,
+                stem: `Kelompok kata berikut yang semuanya merupakan kosakata khusus dalam bidang sains yang terdapat pada teks adalah ....`,
+                options: [
+                    `kamera, lensa, senja`,
+                    `filtrasi, kualitas air, uji pH`,
+                    `fotografi, digital, instruktur`,
+                    `komposisi, aperture, shutter speed`
+                ],
+                key: 'B'
+            },
+            {
+                number: 21,
+                type: 'PG',
+                stimulus: `(Mengacu pada teks Surat Pribadi dari Sri ke Rina)`,
+                stimulusRef: 19,
+                stem: `Makna ungkapan "berburu foto" pada paragraf ketiga teks tersebut adalah ....`,
+                options: [
+                    `mengejar objek foto yang bergerak sangat cepat`,
+                    `mengambil foto hewan-hewan liar di hutan atau pantai`,
+                    `mencari pemandangan yang bagus untuk dijadikan objek foto`,
+                    `mengikuti perlombaan fotografi dengan hadiah yang besar`
+                ],
+                key: 'C'
+            },
+
+            // Soal 22-24
+            {
+                number: 22,
+                type: 'CATEGORY',
+                stimulus: `<strong>Persahabatan Kancil dan Pipit</strong><br>Hutan sedang dilanda kemarau. Tanah sangat kering dan retak. Sungai tidak lagi memiliki air. Semua penghuni hutan merasa haus. Kancil segera mencari jalan keluar. Pipit rajin ikut membantu Kancil. Mereka berjalan menempuh jarak jauh. Akhirnya mereka menemukan sebuah sumur. Air sumur itu sangat jernih. Namun ada ular besar di sana. Ular itu sangat galak sekali. Ular menghalangi jalan menuju sumur.<br><br>Pipit mulai merasa ciut nyali. Tubuh kecilnya gemetar karena takut. Kancil segera menenangkan sahabatnya itu. Kancil mulai menyusun siasat cerdik. Kancil berpura-pura jatuh ke lubang. Ular mendekat karena merasa penasaran. Pipit segera pasang badan untuk membantu. Dia mematuk ekor ular itu. Ular terkejut bukan main sekarang. Ular itu akhirnya terpeleset jatuh. Ular besar terjebak di sumur.<br><br>Kancil dan Pipit akhirnya menang. Mereka segera mengambil air bersih. Berita baik tersebar sangat cepat. Seluruh penghuni hutan merasa gembira. Mereka sangat memuji jasa Kancil. Mereka juga sangat mengagumi Pipit. Persahabatan mereka kini semakin kuat. Kancil memang hewan yang cerdik. Pipit juga burung yang berani. Mereka selalu saling melengkapi sekarang. Kini hutan kembali menjadi damai. Semua hewan hidup dengan rukun.`,
+                source: `Sumber: <a href="https://dongengceritarakyat.com/fabel-kancil-dan-burung-pipit/" target="_blank">https://dongengceritarakyat.com/fabel-kancil-dan-burung-pipit/</a>`,
+                stem: `Apakah urutan peristiwa berikut sudah sesuai dengan isi teks fabel tersebut? Tentukan Benar atau Salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Peristiwa Kancil mengajak Pipit mencari sumber air baru terjadi setelah informasi mengenai kondisi sungai yang mengering.`,
+                    `Urutan kejadian yang tepat adalah Pipit mematuk ekor ular terlebih dahulu, kemudian Kancil berpura-pura jatuh untuk memancing ular tersebut.`,
+                    `Peristiwa seluruh hewan berterima kasih kepada Kancil dan Pipit merupakan bagian yang diletakkan pada urutan paling akhir.`
+                ],
+                key: ['Benar', 'Salah', 'Benar']
+            },
+            {
+                number: 23,
+                type: 'CATEGORY',
+                stimulus: `(Mengacu pada teks Fabel "Persahabatan Kancil dan Pipit")`,
+                stimulusRef: 22,
+                stem: `Apakah penjelasan makna ungkapan berikut sudah sesuai dengan konteks penggunaan di dalam teks fabel tersebut? Tentukan Benar atau Salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Ungkapan "ciut nyali" yang dialami Pipit saat melihat ular besar memiliki makna bahwa Pipit merasa sangat takut atau kehilangan keberaniannya.`,
+                    `Teks menggunakan ungkapan "pasang badan" untuk menggambarkan tindakan Pipit yang berani menghadapi risiko demi membantu sahabatnya.`,
+                    `Makna ungkapan "akal cerdik" pada tokoh Kancil dalam cerita tersebut adalah menggunakan kelicikan untuk mencuri air milik penghuni hutan lainnya.`
+                ],
+                key: ['Benar', 'Benar', 'Salah']
+            },
+            {
+                number: 24,
+                type: 'MCMA',
+                instruction: `(Pilih semua jawaban benar! Jawaban benar lebih dari satu)`,
+                stimulus: `(Mengacu pada teks Fabel "Persahabatan Kancil dan Pipit")`,
+                stimulusRef: 22,
+                stem: `Berdasarkan teks tersebut, manakah pernyataan yang paling tepat menggambarkan perasaan yang muncul pada paragraf kedua?`,
+                options: [
+                    `Pembaca ikut merasakan perubahan perasaan Pipit, dari yang awalnya merasa sangat takut menjadi berani demi menolong sahabatnya.`,
+                    `Muncul perasaan tegang saat Kancil berpura-pura jatuh karena itu adalah bagian dari rencana berbahaya untuk memancing ular yang galak.`,
+                    `Pembaca merasa sedih dan kasihan kepada ular karena ia terjebak di dalam sumur tua dan tidak ada hewan yang mau menolongnya keluar.`
+                ],
+                key: ['A', 'B']
+            },
+
+            // Soal 25-27
+            {
+                number: 25,
+                type: 'PG',
+                stimulus: `<strong>Tabulampot</strong><br>Tanaman buah dalam pot<br>Kini lingkunganku makin sejuk<br>Karena tanaman tumbuh dalam pot<br>Ku bisa cipta taman di lahan yang tak luas<br>Kuhidupkan halaman dengan penghijauan<br>Manfaat luar biasa dari budidaya tanaman<br>Lahan sempit jadi tampak mengesankan<br>Indah dipandang dan asri menawan<br><br>Makin banyak metode,cara dan solusi<br>Makin kita peduli dengan kenampakkan bumi<br>Permasalahan lingkungan bisa diatasi<br>Semoga selalu indah berseri`,
+                source: `Sumber: Dokumen Pribadi`,
+                stem: `Berdasarkan kosakata yang dominan pada bait pertama dan kedua, objek utama yang menjadi fokus pembahasan dalam puisi tersebut adalah ....`,
+                options: [
+                    `pembangunan taman kota yang luas dan asri`,
+                    `budidaya tanaman buah di dalam wadah pot`,
+                    `penjualan bibit pohon di halaman rumah`,
+                    `penggunaan pupuk kimia untuk tanaman hias`
+                ],
+                key: 'B'
+            },
+            {
+                number: 26,
+                type: 'PG',
+                stimulus: `(Mengacu pada Puisi "Tabulampot")`,
+                stimulusRef: 25,
+                stem: `Pesan yang ingin disampaikan penulis kepada pembaca melalui bait terakhir puisi tersebut adalah ....`,
+                options: [
+                    `permasalahan lingkungan hanya bisa diselesaikan oleh pemerintah`,
+                    `kita harus mencari lahan yang luas jika ingin menanam pohon`,
+                    `kepedulian terhadap keasrian bumi dapat dimulai dengan solusi kreatif di lahan sempit`,
+                    `metode penanaman modern sangat sulit untuk dipraktikkan oleh orang awam.`
+                ],
+                key: 'C'
+            },
+            {
+                number: 27,
+                type: 'PG',
+                stimulus: `(Mengacu pada Puisi "Tabulampot")`,
+                stimulusRef: 25,
+                stem: `makna dari "kuhidupkan" pada paragraf kedua puisi tersebut adalah ....`,
+                options: [
+                    `memberi nyawa kepada benda mati yang ada di halaman`,
+                    `memperbaiki pagar halaman yang sudah rusak`,
+                    `membuat suasana halaman menjadi lebih segar, berwarna, dan bermanfaat`,
+                    `memasang lampu-lampu yang terang di sekitar taman pot`
+                ],
+                key: 'C'
+            },
+
+            // Soal 28-30
+            {
+                number: 28,
+                type: 'CATEGORY',
+                stimulus: `<strong>Kehidupan Semut yang Hebat</strong><br>Semut adalah serangga yang sangat kecil. Mereka hidup dalam kelompok yang besar. Kelompok itu disebut sebagai sebuah koloni. Di dalam koloni, semua semut bekerja. Ada semut ratu yang bertugas bertelur. Ada juga semut pekerja yang rajin. Mereka semua hidup dengan sangat rukun.<br><br>Awalnya, semut pekerja mencari sumber makanan. Mereka berjalan jauh ke luar sarang. Saat menemukan gula, mereka sangat senang. Semut tidak makan makanan itu sendiri. Ia membawa makanan pulang ke sarang. Ia meninggalkan jejak bau di tanah. Teman-temannya akan mengikuti jejak itu. Mereka bekerja sama mengangkut beban berat.<br><br>Tiba-tiba, ada kaki manusia datang mendekat. Tanah di sekitar sarang menjadi bergetar. Semut-semut mulai merasa sangat panik sekali. Mereka segera masuk ke dalam lubang. Suasana di dalam sarang sangat gelap. Namun, mereka semua merasa sangat aman. Keadaan di luar pun kembali tenang.<br><br>Kini, stok makanan mereka sangat banyak. Semua semut makan dengan sangat kenyang. Mereka saling berbagi makanan dengan adil. Tidak ada semut yang merasa lapar. Sarang pun menjadi tempat yang nyaman. Kerja sama membuat hidup mereka mudah. Mereka adalah hewan yang sangat hebat.`,
+                source: `Sumber: <a href="https://www.nationalgeographic.com/animals/invertebrates/facts/ants" target="_blank">https://www.nationalgeographic.com/animals/invertebrates/facts/ants</a> dengan beberapa perubahan`,
+                stem: `Berdasarkan teks tersebut, apakah alur kerja semut dalam mencari dan membawa makanan berikut ini sudah tepat? Tentukan Benar atau Salah dari pernyataan-pernyataan berikut!`,
+                statements: [
+                    `Semut pekerja menemukan sumber makanan, lalu mereka langsung memakannya di tempat sampai habis sebelum kembali ke sarang.`,
+                    `Setelah menemukan makanan, semut meninggalkan jejak bau di tanah agar teman-teman satu koloninya bisa mengikuti jalur tersebut.`,
+                    `Semut-semut bekerja sama mengangkut beban makanan yang berat untuk dibawa pulang menuju sarang mereka.`
+                ],
+                key: ['Salah', 'Benar', 'Benar']
+            },
+            {
+                number: 29,
+                type: 'CATEGORY',
+                stimulus: `(Mengacu pada teks "Kehidupan Semut yang Hebat")`,
+                stimulusRef: 28,
+                stem: `Berdasarkan teks tersebut, perhatikan pernyataan-pernyataan mengenai perubahan yang dialami oleh para semut dan lingkungannya berikut ini. Tentukan apakah pernyataan tersebut Benar atau Salah!`,
+                statements: [
+                    `Karakter semut yang awalnya merasa panik saat ada gangguan manusia berubah menjadi merasa aman setelah mereka masuk ke dalam lubang sarang.`,
+                    `Kondisi stok makanan di dalam sarang berubah dari awalnya kosong menjadi sangat banyak setelah semut pekerja berhasil membawa pulang gula.`,
+                    `Sikap semut berubah dari yang semula bekerja secara mandiri menjadi saling bermusuhan karena harus berebut makanan di dalam sarang yang sempit.`
+                ],
+                key: ['Benar', 'Benar', 'Salah']
+            },
+            {
+                number: 30,
+                type: 'MCMA',
+                instruction: `(Pilih semua jawaban benar! Jawaban benar lebih dari satu)`,
+                stimulus: `(Mengacu pada teks "Kehidupan Semut yang Hebat")`,
+                stimulusRef: 28,
+                stem: `Dalam teks tersebut, diceritakan bahwa semut saling bekerja sama. Manakah pernyataan di bawah ini yang menunjukkan contoh penerapan nilai kerja sama dan berbagi tersebut dalam kehidupan sehari-hari di lingkungan sekolah atau rumah?`,
+                options: [
+                    `Menyelesaikan tugas kelompok secara bersama-sama agar pekerjaan yang sulit terasa lebih ringan dan cepat selesai.`,
+                    `Menghabiskan semua bekal makanan sendirian di pojok kelas agar tidak ada teman yang meminta bagian.`,
+                    `Membagi tugas piket kelas secara adil kepada semua teman agar kebersihan kelas terjaga demi kenyamanan bersama.`
+                ],
+                key: ['A', 'C']
+            }
+        ];
+
+        // 1. LOGIN HANDLER
+        function handleLogin(e) {
+            e.preventDefault();
+            const nama = document.getElementById('input-nama').value.trim();
+            const nisn = document.getElementById('input-nisn').value.trim();
+            const token = document.getElementById('input-token').value.trim().toUpperCase();
+
+            const errorDiv = document.getElementById('error-token');
+
+            if (token !== CORRECT_TOKEN) {
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            errorDiv.classList.add('hidden');
+            currentUser.nama = nama;
+            currentUser.nisn = nisn;
+
+            // Show Confirmation Modal
+            document.getElementById('confirm-nama').innerText = nama;
+            document.getElementById('confirm-nisn').innerText = nisn;
+            document.getElementById('modal-instructions').classList.remove('hidden');
+        }
+
+        // 2. START EXAM HANDLER
+        function startExam() {
+            document.getElementById('modal-instructions').classList.add('hidden');
+            document.getElementById('page-login').classList.add('hidden');
+            document.getElementById('page-exam').classList.remove('hidden');
+
+            document.getElementById('header-user-info').innerText = `Peserta: ${currentUser.nama} (${currentUser.nisn})`;
+
+            // Initialize Grid & Question
+            buildNavigationGrid();
+            loadQuestion(0);
+
+            // Start Timer
+            startTime = new Date();
+            startTimer();
+        }
+
+        // 3. NAVIGATION GRID BUILDER
+        function buildNavigationGrid() {
+            const grid = document.getElementById('nav-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                const btn = document.createElement('button');
+                btn.id = `nav-btn-${i}`;
+                btn.className = `nav-btn status-unanswered`;
+                btn.innerText = i + 1;
+                btn.onclick = () => loadQuestion(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        function updateNavStatus() {
+            for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+                const btn = document.getElementById(`nav-btn-${i}`);
+                btn.className = 'nav-btn'; // reset
+
+                const hasAnswer = userAnswers[i] !== undefined && userAnswers[i] !== null && 
+                                 (Array.isArray(userAnswers[i]) ? userAnswers[i].length > 0 : true);
+                const isDoubt = doubtStatus[i];
+
+                if (isDoubt) {
+                    btn.classList.add('status-doubt');
+                } else if (hasAnswer) {
+                    btn.classList.add('status-answered');
+                } else {
+                    btn.classList.add('status-unanswered');
+                }
+
+                if (i === currentQuestionIndex) {
+                    btn.classList.add('status-active');
+                }
+            }
+        }
+
+        // 4. LOAD QUESTION CONTENT
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const qData = questionsData[index];
+
+            // Set Title & Badge
+            document.getElementById('question-title-number').innerText = `Soal Nomor ${qData.number}`;
+            
+            const badge = document.getElementById('question-type-badge');
+            if (qData.type === 'PG') badge.innerText = 'Pilihan Ganda';
+            else if (qData.type === 'MCMA') badge.innerText = 'Pilihan Ganda Kompleks';
+            else if (qData.type === 'CATEGORY') badge.innerText = 'Kategori (Benar / Salah)';
+
+            // Render Stimulus (Handling referenced stimulus)
+            const stimulusTextEl = document.getElementById('stimulus-text');
+            const stimulusSourceEl = document.getElementById('stimulus-source');
+
+            let stimulusContent = qData.stimulus;
+            let sourceContent = qData.source || '';
+
+            if (qData.stimulusRef) {
+                const refData = questionsData.find(q => q.number === qData.stimulusRef);
+                if (refData) {
+                    stimulusContent = refData.stimulus;
+                    sourceContent = refData.source || '';
+                }
+            }
+
+            stimulusTextEl.innerHTML = stimulusContent;
+            if (sourceContent) {
+                stimulusSourceEl.innerHTML = sourceContent;
+                stimulusSourceEl.classList.remove('hidden');
+            } else {
+                stimulusSourceEl.classList.add('hidden');
+            }
+
+            // Instruction & Stem
+            const instEl = document.getElementById('question-instruction');
+            if (qData.instruction) {
+                instEl.innerText = qData.instruction;
+                instEl.classList.remove('hidden');
+            } else {
+                instEl.classList.add('hidden');
+            }
+
+            document.getElementById('question-stem').innerText = qData.stem;
+
+            // Render Options View based on Type
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            if (qData.type === 'PG') {
+                renderPGOptions(container, qData, index);
+            } else if (qData.type === 'MCMA') {
+                renderMCMAOptions(container, qData, index);
+            } else if (qData.type === 'CATEGORY') {
+                renderCategoryOptions(container, qData, index);
+            }
+
+            // Update Doubt Button State
+            const chkDoubt = document.getElementById('chk-doubt-state');
+            chkDoubt.checked = !!doubtStatus[index];
+
+            // Controls Pagination
+            document.getElementById('btn-prev').disabled = index === 0;
+            
+            if (index === TOTAL_QUESTIONS - 1) {
+                document.getElementById('btn-next').classList.add('hidden');
+                document.getElementById('btn-finish').classList.remove('hidden');
+            } else {
+                document.getElementById('btn-next').classList.remove('hidden');
+                document.getElementById('btn-finish').classList.add('hidden');
+            }
+
+            updateNavStatus();
+        }
+
+        // RENDER PG (Pilihan Ganda)
+        function renderPGOptions(container, qData, qIndex) {
+            const letters = ['A', 'B', 'C', 'D'];
+            const currentAns = userAnswers[qIndex];
+
+            qData.options.forEach((optText, idx) => {
+                const letter = letters[idx];
+                const isSelected = currentAns === letter;
+
+                const card = document.createElement('div');
+                card.className = `option-card rounded-xl p-4 flex items-center gap-3.5 ${isSelected ? 'selected-pg' : ''}`;
+                card.onclick = () => {
+                    userAnswers[qIndex] = letter;
+                    loadQuestion(qIndex);
+                };
+
+                card.innerHTML = `
+                    <div class="option-circle-btn">${letter}</div>
+                    <div class="text-option text-gray-800">${optText}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // RENDER MCMA (Multiple Choice Multiple Answer)
+        function renderMCMAOptions(container, qData, qIndex) {
+            const letters = ['A', 'B', 'C', 'D'];
+            const currentAns = Array.isArray(userAnswers[qIndex]) ? userAnswers[qIndex] : [];
+
+            qData.options.forEach((optText, idx) => {
+                const letter = letters[idx];
+                const isSelected = currentAns.includes(letter);
+
+                const card = document.createElement('div');
+                card.className = `option-card rounded-xl p-4 flex items-center gap-3.5 ${isSelected ? 'selected-mcma' : ''}`;
+                card.onclick = () => {
+                    let updated = [...currentAns];
+                    if (updated.includes(letter)) {
+                        updated = updated.filter(item => item !== letter);
+                    } else {
+                        updated.push(letter);
+                    }
+                    userAnswers[qIndex] = updated;
+                    loadQuestion(qIndex);
+                };
+
+                card.innerHTML = `
+                    <div class="option-checkbox-box">${isSelected ? '✓' : ''}</div>
+                    <div class="text-option text-gray-800"><strong class="mr-1">${letter}.</strong> ${optText}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // RENDER CATEGORY (Table Benar / Salah)
+        function renderCategoryOptions(container, qData, qIndex) {
+            const currentAns = userAnswers[qIndex] || [null, null, null];
+
+            const table = document.createElement('table');
+            table.className = 'w-full category-table bg-white rounded-xl overflow-hidden shadow-sm text-option';
+            
+            table.innerHTML = `
+                <thead>
+                    <tr class="bg-blue-50 text-blue-900 font-bold">
+                        <th class="text-left w-3/5">Pernyataan</th>
+                        <th class="text-center w-1/5">Benar</th>
+                        <th class="text-center w-1/5">Salah</th>
+                    </tr>
+                </thead>
+                <tbody id="category-table-body"></tbody>
+            `;
+
+            const tbody = table.querySelector('#category-table-body');
+
+            qData.statements.forEach((stmtText, idx) => {
+                const tr = document.createElement('tr');
+                const val = currentAns[idx];
+
+                tr.innerHTML = `
+                    <td class="text-gray-800 leading-relaxed">${stmtText}</td>
+                    <td class="text-center">
+                        <button type="button" onclick="setCategoryAnswer(${qIndex}, ${idx}, 'Benar')" 
+                            class="category-btn ${val === 'Benar' ? 'active-true' : ''}">
+                            ${val === 'Benar' ? '✓' : ''}
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" onclick="setCategoryAnswer(${qIndex}, ${idx}, 'Salah')" 
+                            class="category-btn ${val === 'Salah' ? 'active-false' : ''}">
+                            ${val === 'Salah' ? '✓' : ''}
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            container.appendChild(table);
+        }
+
+        function setCategoryAnswer(qIndex, stmtIdx, choice) {
+            if (!userAnswers[qIndex]) {
+                userAnswers[qIndex] = [null, null, null];
+            }
+            userAnswers[qIndex][stmtIdx] = choice;
+            loadQuestion(qIndex);
+        }
+
+        // TOGGLE DOUBT STATUS
+        function toggleDoubt() {
+            doubtStatus[currentQuestionIndex] = !doubtStatus[currentQuestionIndex];
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // NAVIGATION CONTROLS
+        function nextQuestion() {
+            if (currentQuestionIndex < TOTAL_QUESTIONS - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        // TIMER FUNCTIONS
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeRemainingSeconds--;
+                updateTimerDisplay();
+
+                if (timeRemainingSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemainingSeconds / 60);
+            const seconds = timeRemainingSeconds % 60;
+            document.getElementById('timer-display').innerText = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // CONFIRM FINISH EXAM
+        function confirmFinishExam() {
+            const answeredCount = Object.keys(userAnswers).filter(k => {
+                const ans = userAnswers[k];
+                if (Array.isArray(ans)) return ans.filter(x => x !== null).length > 0;
+                return ans !== null && ans !== undefined;
+            }).length;
+
+            const remaining = TOTAL_QUESTIONS - answeredCount;
+
+            let msg = "Apakah Anda yakin ingin menyelesaikan Uji Coba ini?";
+            if (remaining > 0) {
+                msg = `Masih ada ${remaining} soal yang belum Anda jawab. ` + msg;
+            }
+
+            if (window.confirm(msg)) {
+                finishExam();
+            }
+        }
+
+        // 5. EVALUATION & SCORE COMPUTATION
+        function finishExam() {
+            clearInterval(timerInterval);
+
+            let correctCount = 0;
+
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+
+                if (!userAns) return;
+
+                if (q.type === 'PG') {
+                    if (userAns === q.key) correctCount++;
+                } else if (q.type === 'MCMA') {
+                    // Array match
+                    if (Array.isArray(userAns)) {
+                        const sortedUser = [...userAns].sort().join(',');
+                        const sortedKey = [...q.key].sort().join(',');
+                        if (sortedUser === sortedKey) correctCount++;
+                    }
+                } else if (q.type === 'CATEGORY') {
+                    // Requires ALL 3 statements correct for 1 point
+                    if (Array.isArray(userAns) && userAns.length === 3) {
+                        const isAllCorrect = userAns.every((val, i) => val === q.key[i]);
+                        if (isAllCorrect) correctCount++;
+                    }
+                }
+            });
+
+            // Calculate Score: (Correct x 100) / 30
+            const score = (correctCount * 100) / TOTAL_QUESTIONS;
+            const formattedScore = score.toFixed(2);
+
+            // Calculate time taken
+            const timeDiffSeconds = (EXAM_DURATION_MINUTES * 60) - timeRemainingSeconds;
+            const elapsedMins = Math.floor(timeDiffSeconds / 60);
+            const elapsedSecs = timeDiffSeconds % 60;
+            const timeString = `${elapsedMins} menit ${elapsedSecs} detik`;
+
+            // Display Results Page
+            document.getElementById('page-exam').classList.add('hidden');
+            document.getElementById('page-result').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = formattedScore;
+            document.getElementById('res-nama').innerText = currentUser.nama;
+            document.getElementById('res-nisn').innerText = currentUser.nisn;
+            document.getElementById('res-correct').innerText = `${correctCount} dari ${TOTAL_QUESTIONS} Soal`;
+            document.getElementById('res-time').innerText = timeString;
+        }
+    </script>
+</body>
+</html>
