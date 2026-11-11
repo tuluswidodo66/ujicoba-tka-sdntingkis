@@ -389,6 +389,11 @@
                 <div class="flex justify-between"><span class="text-gray-600">Waktu Pengerjaan:</span> <span id="res-time" class="font-bold text-gray-800"></span></div>
             </div>
 
+            <!-- Sync Status Banner -->
+            <div id="sync-status" class="max-w-md mx-auto text-xs p-3 rounded-lg border bg-blue-50 border-blue-200 text-blue-700 font-semibold">
+                ⏳ Menyimpan nilai ke database Google Sheets...
+            </div>
+
             <div>
                 <button onclick="location.reload()" 
                     class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition duration-200">
@@ -405,6 +410,9 @@
 
     <!-- ==================== JAVASCRIPT ENGINE & SOAL DATABASE ==================== -->
     <script>
+        // CONFIGURATION GOOGLE APPS SCRIPT INTEGRATION
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwJxBOdtnUfdwTC7Pxi5bsj7lbxtUKGEgELza1gAepzRhj3vC01eJYp1d_tSIh0ptdkyQ/exec";
+
         // TOKEN CONFIGURATION
         const CORRECT_TOKEN = "VL3URA";
         const TOTAL_QUESTIONS = 30;
@@ -1224,6 +1232,52 @@
             document.getElementById('res-nisn').innerText = currentUser.nisn;
             document.getElementById('res-correct').innerText = `${correctCount} dari ${TOTAL_QUESTIONS} Soal`;
             document.getElementById('res-time').innerText = timeString;
+
+            // Trigger pengiriman data otomatis ke Google Sheets via Apps Script
+            sendResultToSheet(currentUser.nama, currentUser.nisn, `${correctCount} / ${TOTAL_QUESTIONS}`, formattedScore, timeString);
+        }
+
+        // FUNCTION FOR GOOGLE APPS SCRIPT INTEGRATION
+        function sendResultToSheet(nama, nisn, benarText, nilaiFinal, waktuString) {
+            const syncStatusBox = document.getElementById('sync-status');
+
+            if (!WEB_APP_URL || WEB_APP_URL.trim() === "") {
+                if (syncStatusBox) {
+                    syncStatusBox.className = "max-w-md mx-auto text-xs p-3 rounded-lg border bg-amber-50 border-amber-200 text-amber-700 font-semibold";
+                    syncStatusBox.innerHTML = "⚠️ URL Web App Apps Script belum disetting.";
+                }
+                return;
+            }
+
+            const payload = {
+                nama: nama,
+                nisn: nisn,
+                benar: benarText,
+                nilai: nilaiFinal,
+                waktu: waktuString
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                if (syncStatusBox) {
+                    syncStatusBox.className = "max-w-md mx-auto text-xs p-3 rounded-lg border bg-green-50 border-green-200 text-green-700 font-semibold";
+                    syncStatusBox.innerHTML = "✅ Data nilai berhasil tersimpan ke database Google Sheets!";
+                }
+            })
+            .catch(error => {
+                console.error('Error Apps Script:', error);
+                if (syncStatusBox) {
+                    syncStatusBox.className = "max-w-md mx-auto text-xs p-3 rounded-lg border bg-red-50 border-red-200 text-red-700 font-semibold";
+                    syncStatusBox.innerHTML = "❌ Gagal menyimpan nilai otomatis. Periksa koneksi internet Anda.";
+                }
+            });
         }
     </script>
 </body>
